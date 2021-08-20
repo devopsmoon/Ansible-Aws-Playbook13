@@ -38,6 +38,7 @@
         name: vproelb-sg
         description: allow port 80 from any where
         region: "{{region}}"
+        vpc_id: "{{vpcoutid}}"
         state: present
         rules:
           - proto: tcp
@@ -46,19 +47,21 @@
             cidr_ip: 0.0.0.0/0
         tags:
           Name: vprofile-ELB-sg
-      register: vproelb-sg
+      register: vproelbsg_out
 
     - name: creating the security group for vprofile-stack
       ec2_group:
         name: vprofile-stack
         description: allow port 80 from any where
         region: "{{region}}"
+        vpc_id: "{{vpcoutid}}"
         state: present
+        purge_rules: no
         rules:
           - proto: tcp
             from_port: 80
             to_port: 80
-            group_id: "{{vproelb-sg.group_id}}"
+            group_id: "{{vproelbsg_out.group_id}}"
 
           - proto: tcp
             from_port: 22
@@ -71,7 +74,9 @@
         name: vprofile-stack
         description: allow security from its own
         region: "{{region}}"
+        vpc_id: "{{vpcoutid}}"
         state: present
+        purge_rules: no
         rules:
           - proto: all
             group_id: "{{vprofilesg_out.group_id}}"
