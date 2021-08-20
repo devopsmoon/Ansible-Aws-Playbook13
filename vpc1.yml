@@ -70,7 +70,7 @@
 
     - name: creating the private subnet2
       ec2_vpc_subnet:
-        vpc_id: "{{vpoout.vpc.id}}"
+        vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         az: "{{zone2}}"
         cidr: "{{prisub2cidr}}"
