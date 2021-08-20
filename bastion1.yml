@@ -66,3 +66,10 @@
         group_id: "{{bastionsg_out.group_id}}"
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastionhost_out
+
+    - name: insert and update the vpc-output file
+      blockinfile:
+        path: vars/vpc-output.var
+        backup: yes
+        block: |
+          bastionsgid: {{bastionhost_out.group_id}}
