@@ -72,4 +72,4 @@
         path: vars/vpc-output.var
         backup: yes
         block: |
-          bastionsgid: {{bastionhost_out.group_id}}
+          bastionsgid: {{bastionsg_out.group_id}}
